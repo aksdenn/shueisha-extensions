@@ -1,5 +1,5 @@
 {
-  "buildTime": "2026-08-16T23:30:59.115Z",
+  "buildTime": "2026-09-01T19:26:55.613Z",
   "builtWith": {
     "toolchain": "1.0.0-alpha.92",
     "types": "1.0.0-alpha.92"
@@ -9,6 +9,27 @@
     "description": "A Paperback extension for MangaPlus."
   },
   "sources": [
+    {
+      "name": "MangaMillion",
+      "description": "Extension that pulls content from mangamillion.shueisha.co.jp.",
+      "version": "1.0.0-alpha.1",
+      "icon": "icon.png",
+      "language": "en",
+      "contentRating": "SAFE",
+      "capabilities": [
+        1,
+        4,
+        64
+      ],
+      "badges": [],
+      "developers": [
+        {
+          "name": "Aksdenn",
+          "github": "https://github.com/aksdenn"
+        }
+      ],
+      "id": "MangaMillion"
+    },
     {
       "name": "MangaPlus",
       "description": "Extension that pulls content from mangaplus.shueisha.co.jp.",

@@ -1,0 +1,1 @@
+{"name":"MangaMillion","description":"Extension that pulls content from mangamillion.shueisha.co.jp.","version":"1.0.0-alpha.1","icon":"icon.png","language":"en","contentRating":"SAFE","capabilities":[1,4,64],"badges":[],"developers":[{"name":"Aksdenn","github":"https://github.com/aksdenn"}],"id":"MangaMillion"}
