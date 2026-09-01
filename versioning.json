@@ -1,19 +1,19 @@
 {
-  "buildTime": "2026-09-01T20:13:25.567Z",
+  "buildTime": "2026-09-01T20:50:22.463Z",
   "builtWith": {
     "toolchain": "1.0.0-alpha.92",
     "types": "1.0.0-alpha.92"
   },
   "repository": {
-    "name": "MangaPlus Extension (0.9)",
-    "description": "A Paperback extension for MangaPlus."
+    "name": "Shueisha Extensions",
+    "description": "Paperback extensions for Shueisha properties."
   },
   "sources": [
     {
       "name": "MangaMillion",
       "description": "Extension that pulls content from mangamillion.shueisha.co.jp.",
       "version": "1.0.0-alpha.1",
-      "icon": "icon.png",
+      "icon": "icon-v2.png",
       "language": "en",
       "contentRating": "SAFE",
       "capabilities": [
@@ -34,7 +34,7 @@
     {
       "name": "MangaPlus",
       "description": "Extension that pulls content from mangaplus.shueisha.co.jp.",
-      "version": "1.0.0-alpha.12",
+      "version": "1.0.0-alpha.13",
       "icon": "icon.png",
       "language": "en",
       "contentRating": "SAFE",
