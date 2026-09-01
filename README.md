@@ -1,12 +1,15 @@
-# MangaPlus Extension
+# Shueisha Extensions
 
-Paperback extension for [MangaPlus](https://mangaplus.shueisha.co.jp).
+Paperback extensions for Shueisha properties:
+
+- [MangaPlus](https://mangaplus.shueisha.co.jp)
+- [MangaMillion](https://mangamillion.shueisha.co.jp)
 
 ## Install in Paperback
 
 Add this repository's GitHub Pages URL as a Paperback extension repository:
 
-<https://aksdenn.github.io/mangaplus-extension/>
+<https://aksdenn.github.io/shueisha-extensions/>
 
 The page is generated from the Paperback bundle and deployed automatically whenever `main` is updated.
 

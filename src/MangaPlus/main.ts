@@ -64,6 +64,10 @@ export class MangaPlusExtension implements ExtensionImpl<typeof MangaPlusConfig>
     ignoreImages: true,
   });
   private readonly chapterAccessibilityCache = new Map<number, boolean>();
+  // chapterId -> vwToken. Scoped per chapter so a concurrent load of another chapter
+  // (prefetch, rapid navigation, app resume) can't overwrite the token an in-flight
+  // chapter's page requests still need, which used to cause permanent 403s.
+  private readonly vwTokens = new Map<string, string>();
 
   private getSessionToken(): string {
     const storedToken = Application.getState("sessionToken") as string | undefined;
@@ -87,14 +91,15 @@ export class MangaPlusExtension implements ExtensionImpl<typeof MangaPlusConfig>
     return /^https?:\/\/.+/i.test(value);
   }
 
-  private serializeMangaPageUrl(imageUrl: string, encryptionKey?: string): string {
-    if (!encryptionKey) {
-      return imageUrl;
-    }
-    return `${imageUrl}#${encryptionKey}`;
+  private serializeMangaPageUrl(
+    imageUrl: string,
+    chapterId: string,
+    encryptionKey?: string,
+  ): string {
+    return `${imageUrl}#${chapterId}${encryptionKey ? `.${encryptionKey}` : ""}`;
   }
 
-  private getMangaPageMeta(url: string): { encryptionKey?: string } {
+  private getMangaPageMeta(url: string): { chapterId?: string; encryptionKey?: string } {
     const fragmentIndex = url.lastIndexOf("#");
     if (fragmentIndex === -1) {
       return {};
@@ -105,9 +110,8 @@ export class MangaPlusExtension implements ExtensionImpl<typeof MangaPlusConfig>
       return {};
     }
 
-    return {
-      encryptionKey: fragment,
-    };
+    const [chapterId, encryptionKey] = fragment.split(".");
+    return { chapterId, encryptionKey };
   }
 
   private async isChapterAccessible(chapterId: number): Promise<boolean> {
@@ -288,14 +292,18 @@ export class MangaPlusExtension implements ExtensionImpl<typeof MangaPlusConfig>
         this.chapterAccessibilityCache.set(chapterIdNumber, true);
       }
 
-      Application.setState(result.success?.mangaViewer?.vwToken, "mangaPlusVwToken");
+      if (result.success?.mangaViewer?.vwToken) {
+        this.vwTokens.set(chapter.chapterId, result.success.mangaViewer.vwToken);
+      }
 
       const rawPages = (result.success.mangaViewer?.pages ?? [])
         .map((page) => page?.mangaPage)
         .filter((page): page is NonNullable<typeof page> => Boolean(page));
 
       const pages = rawPages
-        .map((page) => this.serializeMangaPageUrl(page.imageUrl, page.encryptionKey))
+        .map((page) =>
+          this.serializeMangaPageUrl(page.imageUrl, chapter.chapterId, page.encryptionKey),
+        )
         .filter((url) => this.isValidImageUrl(url));
 
       if (pages.length !== rawPages.length) {
@@ -586,13 +594,17 @@ export class MangaPlusExtension implements ExtensionImpl<typeof MangaPlusConfig>
       };
     }
 
-    const vwToken = Application.getState("mangaPlusVwToken") as string | undefined;
     if (request.url.includes("jumpg-assets")) {
       request.headers = {
         ...request.headers,
         Origin: BASE_URL,
         Referer: `${BASE_URL}/`,
       };
+
+      // Look up the token by the chapter this specific page belongs to, rather than a
+      // single global "last chapter loaded" value - see `vwTokens` for why.
+      const { chapterId } = this.getMangaPageMeta(request.url);
+      const vwToken = chapterId ? this.vwTokens.get(chapterId) : undefined;
 
       if (vwToken) {
         request.headers = {

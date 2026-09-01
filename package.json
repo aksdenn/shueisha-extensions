@@ -1,7 +1,7 @@
 {
-  "name": "MangaPlus Extension (0.9)",
+  "name": "Shueisha Extensions",
   "private": true,
-  "description": "A Paperback extension for MangaPlus.",
+  "description": "Paperback extensions for Shueisha properties.",
   "type": "module",
   "scripts": {
     "tsc": "tsc",

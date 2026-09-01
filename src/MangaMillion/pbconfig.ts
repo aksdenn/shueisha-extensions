@@ -1,13 +1,12 @@
 /* SPDX-License-Identifier: GPL-3.0-or-later */
-/* Copyright © 2026 Inkdex */
 
 import { ContentRating, SourceIntents, type ExtensionInfo } from "@paperback/types";
 
 export default {
-  name: "MangaPlus",
-  description: "Extension that pulls content from mangaplus.shueisha.co.jp.",
-  version: "1.0.0-alpha.13",
-  icon: "icon.png",
+  name: "MangaMillion",
+  description: "Extension that pulls content from mangamillion.shueisha.co.jp.",
+  version: "1.0.0-alpha.1",
+  icon: "icon-v2.png",
   language: "en",
   contentRating: ContentRating.EVERYONE,
   capabilities: [
@@ -21,10 +20,6 @@ export default {
     {
       name: "Aksdenn",
       github: "https://github.com/aksdenn",
-    },
-    {
-      name: "Yves Pa",
-      github: "https://github.com/YvesPa",
     },
   ],
 } satisfies ExtensionInfo;
