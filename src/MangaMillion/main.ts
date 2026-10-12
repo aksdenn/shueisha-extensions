@@ -317,7 +317,7 @@ export class MangaMillionExtension implements ExtensionImpl<typeof MangaMillionC
     const hasFilters = tagIds.length > 0 || ratingId !== undefined;
 
     let query_ = `service_language=${language}&avif_enable=true`;
-    if (title) query_ += `&q=${encodeURIComponent(title)}`;
+    if (title) query_ += `&text=${encodeURIComponent(title)}`;
     if (tagIds.length > 0) query_ += `&tag_id=${tagIds.join(",")}`;
     if (ratingId) query_ += `&rating_id=${ratingId}`;
 
