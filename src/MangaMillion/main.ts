@@ -380,6 +380,7 @@ export class MangaMillionExtension implements ExtensionImpl<typeof MangaMillionC
         author: item.subtitle ?? "",
         coverUrl: item.imageUrl,
       }));
+      results.sort((a, b) => a.name.localeCompare(b.name, undefined, { sensitivity: "base" }));
     } else {
       return { items: [] };
     }

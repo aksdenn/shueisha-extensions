@@ -5,7 +5,7 @@ import { ContentRating, SourceIntents, type ExtensionInfo } from "@paperback/typ
 export default {
   name: "MangaMillion",
   description: "Extension that pulls content from mangamillion.shueisha.co.jp.",
-  version: "1.0.0-alpha.2",
+  version: "1.0.0-alpha.3",
   icon: "icon-v2.png",
   language: "en",
   contentRating: ContentRating.EVERYONE,

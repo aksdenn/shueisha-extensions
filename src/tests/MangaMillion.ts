@@ -1,4 +1,4 @@
-import { type TestLogger } from "@paperback/types";
+import { ContentRating, DiscoverSectionType, type TestLogger } from "@paperback/types";
 import { expect } from "chai";
 
 import { MangaMillion, MangaMillionExtension } from "../MangaMillion/main.js";
@@ -42,6 +42,34 @@ export async function runTests(logger: TestLogger) {
     expect(catalogue.items.length).to.be.greaterThan(0);
     expect(results.items.length).to.be.greaterThan(0);
     expect(results.items.length).to.be.lessThan(catalogue.items.length);
+  });
+
+  suite.test("all titles are alphabetical without mutating catalogue order", async () => {
+    const titles = ["Zebra", "banana", "Apple", "Blue Exorcist"];
+    const items = titles.map((title, index) => ({
+      mangaId: String(index),
+      title,
+      imageUrl: "",
+      contentRating: ContentRating.EVERYONE,
+    }));
+    const extension = Object.assign(new MangaMillionExtension(), {
+      getSearchResults: () => Promise.resolve({ items }),
+    });
+
+    const results = await extension.getDiscoverSectionItems({
+      id: "all_titles",
+      title: "All Titles",
+      type: DiscoverSectionType.simpleCarousel,
+    });
+
+    expect(results.items.map((item) => item.title)).to.deep.equal([
+      "Apple",
+      "banana",
+      "Blue Exorcist",
+      "Zebra",
+    ]);
+    expect(items.map((item) => item.title)).to.deep.equal(titles);
+    expect(results.items.map((item) => item.mangaId)).to.deep.equal(["2", "1", "3", "0"]);
   });
 
   await suite.run();
