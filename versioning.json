@@ -1,5 +1,5 @@
 {
-  "buildTime": "2026-10-12T20:25:29.658Z",
+  "buildTime": "2026-10-27T15:34:39.502Z",
   "builtWith": {
     "toolchain": "1.0.0-alpha.92",
     "types": "1.0.0-alpha.92"
@@ -12,7 +12,7 @@
     {
       "name": "MangaMillion",
       "description": "Extension that pulls content from mangamillion.shueisha.co.jp.",
-      "version": "1.0.0-alpha.2",
+      "version": "1.0.0-alpha.3",
       "icon": "icon-v2.png",
       "language": "en",
       "contentRating": "SAFE",
